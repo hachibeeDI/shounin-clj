@@ -21,6 +21,17 @@
    ["-h" "--help"]])
 
 
+(use '[clojure.string :only (join)])
+(defn show-summary [options-summary]
+  (->> ["API Client for 承認君(automatic shounin system)"
+        ""
+        "Usage: program-name [options]"
+        ""
+        "Options:"
+        options-summary
+        ]
+       (join \newline)))
+
 
 (defn get-vocabularies []
   (let [response1 (http/get "http://www.shounin.jp/vocabularies")]
@@ -41,12 +52,11 @@
       (get (json/read-str body) "message"))))
 
 
-(use '[clojure.string :only (join)])
 (defn -main [& args]
   (let [{:keys [options arguments errors summary]} (parse-opts args shounin-options)]
     (cond
       (= (count options) 0) (exit-with 1 (fn [] (println "no arguments")))
-      (:help options) (exit-with 0 #(println summary))
+      (:help options) (exit-with 0 #(-> summary show-summary println))
       (:list options) (exit-with 0 #(println (join "\n" (get-vocabularies))))
       (:add options) (exit-with 0 #(println (add-new-vocabulary (:add options))))
       (:delete options) (exit-with 0 #(println (delete-vocabulary (:delete options))))
