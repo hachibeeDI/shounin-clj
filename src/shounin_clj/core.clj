@@ -2,7 +2,8 @@
   (:require [clojure.tools.cli :refer [parse-opts]]
             [clojure.data.json :as json]
             [org.httpkit.client :as http]
-            ))
+            )
+  (:gen-class))
 
 
 (defn exit-with

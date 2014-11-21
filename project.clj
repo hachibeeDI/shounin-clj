@@ -7,4 +7,5 @@
                  [org.clojure/data.json "0.2.5"]
                  [org.clojure/tools.cli "0.3.1"]
                  [http-kit "2.1.16"]]
-  :main shounin-clj.core)
+  :main shounin-clj.core
+  :aot [shounin-clj.core])
